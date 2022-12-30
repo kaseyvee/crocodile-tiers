@@ -1,5 +1,5 @@
-const express = require("express");
-import { getAllTierLists, getTierListsById, deleteTierListById, createTierList, updateTierList } from "../db/queries/tier_lists";
+import express from "express";
+import { getAllTierLists, getTierListsById, deleteTierListById, createTierList, updateTierList } from "../db/queries/tier_lists.js";
 
 const router = express.Router();
 
@@ -65,4 +65,4 @@ router.put("/:id/edit", (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

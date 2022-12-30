@@ -1,13 +1,13 @@
-const db = require('../../configs/db.config');
+import db from '../../configs/db.config.js';
 
-const getAllTierItems = (tierListId) => {
+export const getAllTierItems = (tierListId) => {
   return db.query("SELECT * FROM tier_items WHERE tier_list_id = $1", [tierListId])
     .then(data => {
       return data.rows;
     });
 };
 
-const addTierItem = (tierListId, name, photo) => {
+export const addTierItem = (tierListId, name, photo) => {
   return db.query(`
 	INSERT INTO tier_items
 	(tier_list_id, name, photo)
@@ -18,7 +18,7 @@ const addTierItem = (tierListId, name, photo) => {
     });
 };
 
-const updateTierItem = (id, tierItemInfo) => {
+export const updateTierItem = (id, tierItemInfo) => {
   const setColums = Object.keys(tierItemInfo).map((property, index) => `${property}=$${index + 2}`).join(', ');
 
   const queryDef = {
@@ -35,11 +35,9 @@ const updateTierItem = (id, tierItemInfo) => {
     .then((data) => data.rows[0]);
 };
 
-const deleteTierItem = (id) => {
+export const deleteTierItem = (id) => {
   return db.query("DELETE * FROM tier_items; WHERE id = $1", [id])
     .then(data => {
       return data.rows;
     });
 };
-
-module.exports = { getAllTierItems, deleteTierItem, updateTierItem, addTierItem };

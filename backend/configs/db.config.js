@@ -1,9 +1,10 @@
 // Database connections
-const { Pool } = require('pg');
+import * as pg from "pg";
+const { Pool } = pg.default;
 
 const {DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT} = process.env;
 
-const pool = new Pool({
+export const pool = new Pool({
 	user: DB_USER,
 	host: DB_HOST,
 	password: DB_PASS,
@@ -17,4 +18,6 @@ pool.connect().then(() => {
 	throw new Error(e);
 })
 
-module.exports = pool;
+const db = new Pool(pool);
+
+export default db;

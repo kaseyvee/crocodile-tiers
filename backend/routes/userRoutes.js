@@ -1,5 +1,5 @@
-const express = require("express");
-import { getAllUsers, getUserById, addUser, updateUser } from "../db/queries/users";
+import express from "express";
+import { getAllUsers, getUserById, addUser, updateUser } from "../db/queries/users.js";
 
 const router = express.Router();
 
@@ -26,23 +26,13 @@ router.get("/:id", (req, res) => {
 
 router.post("/:id/new", (req, res) => {
   const id = req.params.id;
+  const userInfo = req.body;
 
   console.log("req.body", req.body);
-  const tierItem = addTierItem(id, req.body)
-    .then((tierItem) => {
-      res.json(tierItem);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
-});
 
-router.delete('/:id', (req, res) => {
-  const id = req.params.id;
-
-  const tierItem = deleteTierItem(id)
-    .then((tierItem) => {
-      res.json(tierItem);
+  const user = addUser(id, userInfo)
+    .then((user) => {
+      res.json(user);
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
@@ -51,14 +41,15 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id/edit', (req, res) => {
   const id = req.params.id;
+  const userInfo = req.body;
 
-  const tierItem = updateTierItem(id, tierItemInfo)
-    .then((tierItem) => {
-      res.json(tierItem);
+  const user = updateUser(id, userInfo)
+    .then((user) => {
+      res.json(user);
     })
     .catch(
       res.status(500).json({ error: err.message })
     );
 });
 
-module.exports = router;
+export default router;

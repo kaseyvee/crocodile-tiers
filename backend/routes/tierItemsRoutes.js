@@ -1,5 +1,5 @@
-const express = require("express");
-import { getAllTierItems, deleteTierItem, updateTierItem, addTierItem } from "../db/queries/tier_items";
+import express from "express";
+import { getAllTierItems, deleteTierItem, updateTierItem, addTierItem } from "../db/queries/tier_items.js";
 
 const router = express.Router();
 
@@ -50,4 +50,4 @@ router.put('/:id/edit', (req, res) => {
     );
 });
 
-module.exports = router;
+export default router;

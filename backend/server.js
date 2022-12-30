@@ -1,13 +1,15 @@
-require("dotenv").config();
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
-const express = require("express");
-const userRoutes = require("./routes/userRoutes");
-const matchRoutes = require("./routes/matchRoutes");
-const interestRoutes = require("./routes/interestRoutes");
-const userInterestRoutes = require("./routes/userInterestRoutes");
+import dotenv from "dotenv";
+dotenv.config();
+import bodyParser from "body-parser";
+import cors from "cors";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import express from "express";
+
+import userRoutes from "./routes/userRoutes.js"
+import tierListsRoutes from "./routes/tierListsRoutes.js"
+import tierItemsRoutes from "./routes/tierItemsRoutes.js"
+
 const app = express();
 
 //middlewares
@@ -17,19 +19,15 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-//
-
 //routes
 app.use("/api/users", userRoutes);
-app.use("/api/matches", matchRoutes);
-app.use("/api/interests", interestRoutes);
-app.use("/api/user_interests", userInterestRoutes);
-//
+app.use("/api/tier_items", tierItemsRoutes);
+app.use("/api/tier_lists", tierListsRoutes);
 
 //Starting Feature
 app.get("/", (req, res) => {
   res.send(
-    "Option for pathway: /api/users  /api/matches  /api/interests  /api/user_interests"
+    "Option for pathway: /api/users  /api/tier_items  /api/tier_lists"
   );
 });
 
@@ -39,4 +37,3 @@ app.listen(process.env.PORT || 8080, () => {
     "Succefully Starting Server : listening on port " + process.env.PORT
   );
 });
-//
