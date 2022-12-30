@@ -1,4 +1,4 @@
-import db from "../../configs/db.config.js";
+import db from "../connection.js";
 
 export const getAllUsers = () => {
   return db.query("SELECT * FROM users;").then((data) => {

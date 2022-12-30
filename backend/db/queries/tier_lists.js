@@ -1,6 +1,4 @@
-// const db = require('../../configs/db.config');
-
-import db from '../../configs/db.config.js';
+import db from "../connection.js";
 
 export const getAllTierLists = () => {
   return db.query("SELECT * FROM tier_lists;").then(data => {

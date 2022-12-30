@@ -1,39 +1,47 @@
+// load .env data into process.env
 import dotenv from "dotenv";
-dotenv.config();
-import bodyParser from "body-parser";
 import cors from "cors";
-import morgan from "morgan";
-import cookieParser from "cookie-parser";
+dotenv.config();
+import db from "./db/connection.js";
+import * as url from "url";
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+
+// Web server config
 import express from "express";
+import morgan from "morgan";
 
-import userRoutes from "./routes/userRoutes.js"
-import tierListsRoutes from "./routes/tierListsRoutes.js"
-import tierItemsRoutes from "./routes/tierItemsRoutes.js"
-
+const PORT = process.env.PORT || 3001;
 const app = express();
-
-//middlewares
-app.use(cookieParser());
-app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
-app.use(morgan("dev"));
 
-//routes
-app.use("/api/users", userRoutes);
-app.use("/api/tier_items", tierItemsRoutes);
+app.set("view engine", "ejs");
+
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
+
+// Mount all resource routes
+// Note: Feel free to replace the example routes below with your own
+// Note: Endpoints that return data (eg. JSON) usually start with `/api`
+
+import { default as usersRoutes } from "./routes/usersRoutes.js";
+app.use("/api/users", usersRoutes);
+
+import { default as tierListsRoutes } from "./routes/tierListsRoutes.js";
 app.use("/api/tier_lists", tierListsRoutes);
+
+import { default as tierItemsRoutes } from "./routes/tierItemsRoutes.js";
+app.use("/api/tier_items", tierItemsRoutes);
 
 //Starting Feature
 app.get("/", (req, res) => {
   res.send(
-    "Option for pathway: /api/users  /api/tier_items  /api/tier_lists"
+    "Option for pathway: /api/users  /api/tier_lists  /api/tier_items"
   );
 });
 
 //server connection
-app.listen(process.env.PORT || 8080, () => {
-  console.log(
-    "Succefully Starting Server : listening on port " + process.env.PORT
-  );
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });

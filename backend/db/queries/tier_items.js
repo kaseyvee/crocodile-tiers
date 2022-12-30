@@ -1,7 +1,7 @@
-import db from '../../configs/db.config.js';
+import db from "../connection.js";
 
-export const getAllTierItems = (tierListId) => {
-  return db.query("SELECT * FROM tier_items WHERE tier_list_id = $1", [tierListId])
+export const getAllTierItems = () => {
+  return db.query("SELECT * FROM tier_items;")
     .then(data => {
       return data.rows;
     });

@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import { getAllTierItems, deleteTierItem, updateTierItem, addTierItem } from "../db/queries/tier_items.js";
 
 const router = express.Router();
