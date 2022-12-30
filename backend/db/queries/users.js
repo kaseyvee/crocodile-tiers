@@ -19,62 +19,28 @@ const addUser = (email, password, name) => {
   );
 };
 
-const addUserProfileInfo = (query, inputs) => {
-  return db.query(query, inputs);
-};
+const updateUser = (id, userInfo) => {
+  const setColums = Object.keys(userInfo).map((property, index) => `${property}=$${index + 2}`).join(', ');
 
-const checkUserDB = (email) => {
-  return db
-    .query("SELECT * FROM users WHERE email = $1", [email])
-    .then((data) => {
-      return data.rows[0];
-    });
-};
+  console.log("setColums", setColums);
 
-const getUserCommon = (userId) => {
-  return db
-    .query(
-      ` 
-      SELECT * FROM users
-      WHERE id IN (
-        SELECT user_id FROM user_interests
-        WHERE interest_id IN (
-          SELECT interest_id FROM user_interests
-          WHERE user_id IN (
-            SELECT id FROM users
-            WHERE id = $1
-          )
-        )
-      ) 
-      AND (id != $1)
-      AND (SELECT location FROM users WHERE id = $1) LIKE users.location
-      AND id NOT IN (
-        SELECT user_liked FROM matches
-        WHERE user_id = $1
-        AND user_liked IN (
-          SELECT user_id FROM user_interests
-          WHERE interest_id IN (
-            SELECT interest_id FROM user_interests
-            WHERE user_id IN (
-              SELECT id FROM users
-              WHERE id =$1
-            )
-          )
-        )
-      )
-  `,
-      [userId]
-    )
-    .then((data) => {
-      return data.rows;
-    });
+  const queryDef = {
+    text: `
+      UPDATE tier_items
+      SET ${setColums}
+      WHERE id = $1
+      RETURNING *
+    `,
+    values: [id, ...Object.values(userInfo)],
+  };
+
+  return db.query(queryDef)
+    .then((data) => data.rows[0]);
 };
 
 module.exports = {
   getAllUsers,
   getUserById,
   addUser,
-  checkUserDB,
-  addUserProfileInfo,
-  getUserCommon,
+  updateUser,
 };
