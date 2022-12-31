@@ -3,7 +3,24 @@ import './ViewTierList.scss';
 
 function ViewTierList() {
 
+  const tiers = [
+    { ranking: "S", colour: "#FF7F7E" },
+    { ranking: "A", colour: "#FFBF7F" },
+    { ranking: "B", colour: "#FEFF7F" },
+    { ranking: "C", colour: "#7EFE7E" },
+    { ranking: "D", colour: "#7FFFFF" },
+    { ranking: "F", colour: "#FF7FFE" }
+  ];
 
+  const tierRanks = tiers.map((tier) => {
+    return (
+      <div>
+        <div style={{ backgroundColor: `${tier.colour}`, width: '100%' }}>
+          {tier.ranking}
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div className='ViewTierList'>
@@ -11,15 +28,9 @@ function ViewTierList() {
         ViewTierList
       </div>
 
-      {/* main tier list div */}
       <div className='tier-list-main'>
         <div className='tier-list-left'>
-          <div>S</div>
-          <div>A</div>
-          <div>B</div>
-          <div>C</div>
-          <div>D</div>
-          <div>F</div>
+          {tierRanks}
         </div>
         <div className='tier-list-right'>
           {/* S rating */}
