@@ -8,26 +8,43 @@
   // height: 100vh;
 }
 
-.tier-box {
+.tier-list-main {
   border: 3px solid #027C49;
-  border-radius: 0.3rem;
-  @include flex-column;
+  border-radius: 0.5rem;
   width: 70%;
+  display: flex;
+  flex-direction: row;
+}
 
-  .tier-row {
-    // margin-bottom: 0.5rem;
-    // border: 3px solid #027C49;
+.tier-list-left {
+  // border: 3px solid red;
+  width: 8%;
 
-    .tier-rank {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      height: 50px;
-      width: 50px;
+  div {
+    background-color: rgb(110, 177, 253);
+    height: 60px;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.tier-list-right {
+  // border: 3px solid #027C49;
+  width: 92%;
+
+  div {
+    height: 60px;
+    display: flex;
+    font-weight: bold;
+    justify-content: left;
+    align-items: center;
+
+    img {
+      height: 60px;
     }
   }
-
 }
 
 .form {

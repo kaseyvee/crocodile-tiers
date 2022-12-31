@@ -2,25 +2,8 @@ import React from 'react';
 import './ViewTierList.scss';
 
 function ViewTierList() {
-  const tiers = [
-    { ranking: "S", colour: "#FF7F7E" },
-    { ranking: "A", colour: "#FFBF7F" },
-    { ranking: "B", colour: "#FEFF7F" },
-    { ranking: "C", colour: "#7EFE7E" },
-    { ranking: "D", colour: "#7FFFFF" },
-    { ranking: "F", colour: "#FF7FFE" }
-  ];
 
-  const tierRanks = tiers.map((tier) => {
-    return (
-      <div className='tier-row'>
-        <div className='tier-rank' style={{ backgroundColor: `${tier.colour}` }}>
-          {tier.ranking}
-        </div>
-        <div className='items-row'></div>
-      </div>
-    );
-  });
+
 
   return (
     <div className='ViewTierList'>
@@ -28,8 +11,49 @@ function ViewTierList() {
         ViewTierList
       </div>
 
-      <div className='tier-box'>
-        {tierRanks}
+      {/* main tier list div */}
+      <div className='tier-list-main'>
+        <div className='tier-list-left'>
+          <div>S</div>
+          <div>A</div>
+          <div>B</div>
+          <div>C</div>
+          <div>D</div>
+          <div>F</div>
+        </div>
+        <div className='tier-list-right'>
+          {/* S rating */}
+          <div>
+            <img src='https://i.imgur.com/nFPH5Pf.png' alt='tier list item' />
+            <img src='https://i.imgur.com/N5ZdQzO.png' alt='tier list item' />
+            <img src='https://i.imgur.com/AnOdNDC.png' alt='tier list item' />
+          </div>
+
+          {/* A rating */}
+          <div>
+            <img src='https://i.imgur.com/sLCkGhk.png' alt='tier list item' />
+          </div>
+
+          {/* B rating */}
+          <div>
+            <img src='https://i.imgur.com/nfrl1Rs.png' alt='tier list item' />
+          </div>
+
+          {/* C rating */}
+          <div>
+            <img src='https://i.imgur.com/7EpYJJL.png' alt='tier list item' />
+          </div>
+
+          {/* D rating */}
+          <div>
+            <img src='https://i.imgur.com/XVIxZwI.png' alt='tier list item' />
+          </div>
+
+          {/* F rating */}
+          <div>
+            <img src='https://i.imgur.com/cttPzot.png' alt='tier list item' />
+          </div>
+        </div>
       </div>
 
       <form className='form'>
