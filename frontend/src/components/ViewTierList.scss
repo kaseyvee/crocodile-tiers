@@ -9,13 +9,14 @@
 }
 
 .tier-box {
+  border: 3px solid #027C49;
+  border-radius: 0.3rem;
   @include flex-column;
   width: 70%;
 
   .tier-row {
-    margin-bottom: 0.1rem;
-    // margin-bottom: -0.25rem;
-    border: 3px solid #027C49;
+    // margin-bottom: 0.5rem;
+    // border: 3px solid #027C49;
 
     .tier-rank {
       display: flex;
