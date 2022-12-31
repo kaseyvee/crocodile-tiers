@@ -1,0 +1,48 @@
+@import '../variables.scss';
+
+.ViewTierList {
+  @include flex-column;
+  // border: 3px dashed rgb(223, 71, 228);
+  justify-content: center;
+  align-items: center;
+  // height: 100vh;
+}
+
+.tier-box {
+  @include flex-column;
+  width: 70%;
+
+  .tier-row {
+    margin-bottom: 0.1rem;
+    // margin-bottom: -0.25rem;
+    border: 3px solid #027C49;
+
+    .tier-rank {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+}
+
+.form {
+  @include flex-column;
+  align-items: center;
+  margin-top: 2rem;
+  background-color: #027C49;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  color: white;
+  width: 70%;
+
+  .inputs {
+    @include flex-row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+}

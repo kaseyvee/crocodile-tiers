@@ -1,44 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import './Homepage.scss';
 
 function Homepage() {
-  const [ tierLists, setTierLists ] = useState();
+  const [tierLists, setTierLists] = useState([]);
 
   useEffect(() => {
-    fetchInterests();
+    fetchTierLists();
   }, []);
 
-  function fetchInterests() {
+  function fetchTierLists() {
     axios.get("/api/tier_lists").then((data) => {
-      setInterests(data.data);
+      console.log("data", data.data);
+      setTierLists(data.data);
     });
   }
 
-  const interestList = interests.map((interest) => {
+  const tierList = tierLists.map((tierList) => {
     return (
-      <Button
-        key={interest.id}
-        variant={
-          props.picked.includes(Number(interest.id)) ? "contained" : "outlined"
-        }
-        className={props.picked.includes(Number(interest.id)) ? "blockAni" : ""}
-        onClick={handleClick}
-        sx={{ marginRight: 1 }}
-        value={interest.id}
+      <div
+        key={tierList.id}
       >
-        {interest.name}
-      </Button>
+        <Link to={`/${tierList.id}`}>{tierList.name}</Link>
+        <p>id: {tierList.id}</p>
+        <p>user_id: {tierList.user_id}</p>
+        <p>Upvotes: {tierList.upvote}</p>
+        <p>Downvotes: {tierList.downvote}</p>
+        <p>Created At: {tierList.created_at}</p>
+      </div>
     );
   });
 
   return (
-    <>
+    <div className='Homepage'>
       <div>
         Home Page <br />
-        {interestList}
+        {tierList}
       </div>
       <Link to="/new">Add new tier list</Link>
-    </>
+    </div>
   );
 }
 
