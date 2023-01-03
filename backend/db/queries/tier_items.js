@@ -7,6 +7,13 @@ export const getAllTierItems = () => {
     });
 };
 
+export const getTierItemsByTierListId = (id) => {
+  return db.query("SELECT * FROM tier_items where tier_list_id = $1;", [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 export const addTierItem = (tierListId, name, photo) => {
   return db.query(`
 	INSERT INTO tier_items
