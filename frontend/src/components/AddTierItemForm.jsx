@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function AddTierItemForm(props) {
-  const [ranking, setRanking] = useState();
+  const [ranking, setRanking] = useState("");
   const [photo, setPhoto] = useState("");
   const [error, setError] = useState("");
+  const [name, setName] = useState("");
 
   const tier_list_id = props.tier_list_id;
 
@@ -22,11 +23,23 @@ function AddTierItemForm(props) {
 
   function handleClick(e) {
     // e.preventDefault();
-    console.log("handleClick");
+    // console.log("handleClick");
 
     axios.post(`/api/tier_items/${tier_list_id}/new`, {
       ranking: ranking,
       photo: photo
+    });
+  }
+
+  function handleTierListNameChange(e) {
+    setError("");
+    setName(e.target.value);
+
+  }
+
+  function handleTierListNameUpdate(e) {
+    axios.put(`/api/tier_lists/${tier_list_id}/edit`, {
+      name: name
     });
   }
 
@@ -56,6 +69,14 @@ function AddTierItemForm(props) {
         </div>
         <div>
           <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+        </div>
+      </div>
+      <br />
+      <div>
+        <h3>Edit Tier List Name</h3>
+        <input type="text" onChange={handleTierListNameChange} className="form-control" />
+        <div>
+          <button type="submit" className="btn btn-primary" onClick={handleTierListNameUpdate}>Submit</button>
         </div>
       </div>
     </form>

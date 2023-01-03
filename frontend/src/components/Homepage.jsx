@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Homepage.scss';
 
 function Homepage() {
+  const navigate = useNavigate();
   const [tierLists, setTierLists] = useState([]);
 
   useEffect(() => {
@@ -15,6 +16,22 @@ function Homepage() {
       console.log("data", data.data);
       setTierLists(data.data);
     });
+  }
+
+  function handleAddNewTierList() {
+    axios.get("api/tier_lists").then((res) => {
+      return res.data.length;
+    })
+      .then(length => {
+        axios.post(`/api/tier_lists/new`, {
+          id: 1,
+          name: "new list"
+        })
+        return length;
+      })
+      .then((length) => {
+        navigate(`/${length + 1}`)
+      })
   }
 
   const tierList = tierLists.map((tierList) => {
@@ -38,7 +55,7 @@ function Homepage() {
         Home Page <br />
         {tierList}
       </div>
-      <Link to="/new">Add new tier list</Link>
+      <button onClick={handleAddNewTierList}>Add new tier list</button>
     </div>
   );
 }

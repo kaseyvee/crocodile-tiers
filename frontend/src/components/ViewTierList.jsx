@@ -26,6 +26,7 @@ function ViewTierList(props) {
 
     axios.get(`/api/tier_items/${id}`)
       .then((res) => {
+        if (res.data.length === 0) return;
         let output = {};
 
         for (let item of res.data) {
@@ -98,9 +99,9 @@ function ViewTierList(props) {
         (<p>loading...</p>)
         :
         (<div className='ViewTierList'>
-          <div>
+          {tierList.name ? <div>
             "{tierList.name}" tier list by {tierList.username}
-          </div>
+          </div> : <div></div>}
 
           <div className='tier-list-main'>
             <div className='tier-list-left'>

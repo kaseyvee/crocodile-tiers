@@ -16,7 +16,6 @@ export default function useApplicationData() {
       axios.get("/api/tier_items"),
     ])
       .then((res) => {
-        console.log("res", res);
         // console.log("res[0].data", res[0].data);
         // console.log("res[1].data", res[1].data);
         // console.log("res[2].data", res[2].data);
