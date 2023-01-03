@@ -7,19 +7,19 @@ export const getAllTierLists = () => {
 };
 
 export const getTierListsById = id => {
-  return db.query("SELECT * FROM tier_lists; WHERE id = $1", [id]).then(data => {
+  return db.query("SELECT tier_lists.*, users.name AS username FROM tier_lists JOIN users ON tier_lists.user_id = users.id WHERE tier_lists.id = $1;", [id]).then(data => {
     return data.rows;
   });
 };
 
 export const getTierListsByUser = user => {
-  return db.query("SELECT * FROM tier_lists; WHERE user = $1", [user]).then(data => {
+  return db.query("SELECT * FROM tier_lists WHERE user = $1;", [user]).then(data => {
     return data.rows;
   });
 };
 
 export const deleteTierListById = id => {
-  return db.query("DELETE * FROM tier_lists; WHERE id = $1", [id]).then(data => {
+  return db.query("DELETE * FROM tier_lists WHERE id = $1;", [id]).then(data => {
     return data.rows;
   });
 };

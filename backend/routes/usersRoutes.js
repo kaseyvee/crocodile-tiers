@@ -20,6 +20,7 @@ router.get("/:id", (req, res) => {
       res.json(user);
     })
     .catch((err) => {
+      console.log("i'm not working")
       res.status(500).json({ error: err.message });
     });
 });
