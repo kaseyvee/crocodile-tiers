@@ -15,8 +15,7 @@ router.get("/", (req, res) => {
 
 router.post("/:id/new", (req, res) => {
   const id = req.params.id;
-
-  console.log("req.body", req.body);
+  
   const tierItem = addTierItem(id, req.body)
     .then((tierItem) => {
       res.json(tierItem);

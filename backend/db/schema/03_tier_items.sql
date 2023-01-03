@@ -5,6 +5,6 @@ CREATE TABLE tier_items (
   ranking VARCHAR(255),
   placed BOOLEAN DEFAULT FALSE,
   photo VARCHAR(255),
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255),
   created_at timestamp default current_timestamp
 );

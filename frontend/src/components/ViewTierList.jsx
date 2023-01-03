@@ -51,7 +51,7 @@ function ViewTierList(props) {
 
   }, []);
 
-  const getTierItemsByRank = function(rank) {
+  function getTierItemsByRank(rank) {
     return sortedTierItems[rank].map((tierItem) => {
       return (
         <TierPhotoItem
@@ -114,6 +114,7 @@ function ViewTierList(props) {
           <AddTierItemForm 
             sortedTierItems
             setSortedTierItems
+            tier_list_id={id}
           />
 
         </div>)}
