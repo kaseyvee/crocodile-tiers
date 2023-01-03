@@ -5,8 +5,15 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function ViewTierList(props) {
-  const [tierItems, setTierItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sortedTierItems, setSortedTierItems] = useState({
+    "S": [],
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": [],
+    "F": []
+  });
 
   const { id } = useParams();
 
@@ -14,20 +21,32 @@ function ViewTierList(props) {
     setLoading(true);
     axios.get(`/api/tier_items/${id}`)
       .then((res) => {
-        console.log("res.data in viewtierlist", res.data);
-        setTierItems(res.data);
+        let output = {};
+        for (let item of res.data) {
+          let rank = item.ranking;
+          if (!output[rank] && rank !== null) {
+            output[rank] = [];
+            output[rank].push(item);
+          } else if (rank !== null) {
+            output[rank].push(item);
+          }
+        }
+        setSortedTierItems(prev => ({ ...prev, ...output }));
       })
-      .then(() => setLoading(false));
+      .then(() => setLoading(false))
+      .catch(err => { console.log("err:", err); });
   }, []);
 
-  const photos = tierItems.map((tierItem) => {
-    return (
-      <img
-        src={tierItem.photo}
-        alt=""
-      />
-    );
-  });
+  const getTierItemsByRank = function(rank) {
+    return sortedTierItems[rank].map((tierItem) => {
+      return (
+        <img
+          src={tierItem.photo}
+          alt=""
+        />
+      );
+    });
+  };
 
   const tiers = [
     { ranking: "S", colour: "#FF7F7E" },
@@ -60,37 +79,28 @@ function ViewTierList(props) {
             {tierRanks}
           </div>
           <div className='tier-list-right'>
-            {/* S rating */}
             <div>
-              <img src='https://i.imgur.com/nFPH5Pf.png' alt='tier list item' />
-              <img src='https://i.imgur.com/N5ZdQzO.png' alt='tier list item' />
-              <img src='https://i.imgur.com/AnOdNDC.png' alt='tier list item' />
-              {photos}
+              {getTierItemsByRank("S")}
             </div>
 
-            {/* A rating */}
             <div>
-              <img src='https://i.imgur.com/sLCkGhk.png' alt='tier list item' />
+              {getTierItemsByRank("A")}
             </div>
 
-            {/* B rating */}
             <div>
-              <img src='https://i.imgur.com/nfrl1Rs.png' alt='tier list item' />
+              {getTierItemsByRank("B")}
             </div>
 
-            {/* C rating */}
             <div>
-              <img src='https://i.imgur.com/7EpYJJL.png' alt='tier list item' />
+              {getTierItemsByRank("C")}
             </div>
 
-            {/* D rating */}
             <div>
-              <img src='https://i.imgur.com/XVIxZwI.png' alt='tier list item' />
+              {getTierItemsByRank("D")}
             </div>
 
-            {/* F rating */}
             <div>
-              <img src='https://i.imgur.com/cttPzot.png' alt='tier list item' />
+              {getTierItemsByRank("F")}
             </div>
           </div>
         </div>
