@@ -1,7 +1,7 @@
 import Homepage from "./components/Homepage";
 import NewTierList from "./components/NewTierList";
 import ViewTierList from "./components/ViewTierList";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
+        <Navbar />
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/new' element={<NewTierList />} />
