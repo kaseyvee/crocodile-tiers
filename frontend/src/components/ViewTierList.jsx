@@ -116,6 +116,7 @@ function ViewTierList(props) {
             sortedTierItems
             setSortedTierItems
             tier_list_id={id}
+            tierListName={tierList.name}
           />
 
         </div>)}

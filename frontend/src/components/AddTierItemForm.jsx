@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './AddTierItemForm.scss';
 
 function AddTierItemForm(props) {
   const [ranking, setRanking] = useState("");
   const [photo, setPhoto] = useState("");
   const [error, setError] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState(props.tierListName);
 
   const tier_list_id = props.tier_list_id;
 
@@ -72,10 +73,10 @@ function AddTierItemForm(props) {
         </div>
       </div>
       <br />
-      <div>
-        <h3>Edit Tier List Name</h3>
-        <input type="text" onChange={handleTierListNameChange} className="form-control" />
+      <div className='edit-tier-list-name'>
+        <h3>Edit tier list name</h3>
         <div>
+          <input type="text" value={name} onChange={handleTierListNameChange} className="form-control" />
           <button type="submit" className="btn btn-primary" onClick={handleTierListNameUpdate}>Submit</button>
         </div>
       </div>

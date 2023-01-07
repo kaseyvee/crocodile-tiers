@@ -1,0 +1,17 @@
+@import '../variables.scss';
+
+h3 {
+  font-size: 1.5rem;
+}
+.edit-tier-list-name {
+  @include flex-column;
+  align-items: center;
+
+  div {
+    @include flex-row;
+    
+    button {
+      margin-left: 2rem;
+    }
+  }
+}
