@@ -7,9 +7,12 @@ export const getAllUsers = () => {
 };
 
 export const getUserById = (id) => {
-  return db.query("SELECT * FROM users WHERE id = $1", [id]).then((data) => {
-    return data.rows;
-  });
+  console.log("inside getuserbyid");
+  return db.query("SELECT * FROM users WHERE id = $1;", [id])
+    .then((data) => {
+      console.log("data", data);
+      return data.rows;
+    });
 };
 
 export const addUser = (email, password, name) => {

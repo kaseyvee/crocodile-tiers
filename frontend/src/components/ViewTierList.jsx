@@ -1,7 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ViewTierList.scss';
+import TierRankItem from './TierRankItem';
+import TierPhotoItem from './TierPhotoItem';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import AddTierItemForm from './AddTierItemForm';
+import ItemsByRank from './ItemsByRank';
 
-function ViewTierList() {
+function ViewTierList(props) {
+  const [loading, setLoading] = useState(false);
+  const [tierList, setTierList] = useState({});
+  const [sortedTierItems, setSortedTierItems] = useState({
+    "S": [],
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": [],
+    "F": []
+  });
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios.get(`/api/tier_items/${id}`)
+      .then((res) => {
+        if (res.data.length === 0) return;
+        let output = {};
+
+        for (let item of res.data) {
+          let rank = item.ranking;
+
+          if (!output[rank] && rank !== null) {
+            output[rank] = [];
+            output[rank].push(item);
+          } else if (rank !== null) {
+            output[rank].push(item);
+          }
+        }
+        setSortedTierItems(prev => ({ ...prev, ...output }));
+      })
+      .then(() => setLoading(false))
+      .catch(err => { console.log("err:", err); });
+
+    axios.get(`/api/tier_lists/${id}`)
+      .then((res) => {
+        setTierList(res.data[0]);
+      })
+      .catch(err => { console.log("err:", err); });
+
+  }, []);
+
+  function getTierItemsByRank(rank) {
+    return sortedTierItems[rank].map((tierItem) => {
+      return (
+        <TierPhotoItem
+          key={tierItem.id}
+          photo={tierItem.photo}
+        />
+      );
+    });
+  };
 
   const tiers = [
     { ranking: "S", colour: "#FF7F7E" },
@@ -14,88 +74,52 @@ function ViewTierList() {
 
   const tierRanks = tiers.map((tier) => {
     return (
-      <div>
-        <div style={{ backgroundColor: `${tier.colour}`, width: '100%' }}>
-          {tier.ranking}
-        </div>
-      </div>
+      <TierRankItem
+        key={tiers.indexOf(tier)}
+        ranking={tier.ranking}
+        colour={tier.colour}
+      />
+    );
+  });
+
+  const itemsByRank = tiers.map((tier) => {
+    return (
+      <ItemsByRank
+        key={tiers.indexOf(tier)}
+        ranking={tier.ranking}
+        getTierItemsByRank={getTierItemsByRank}
+      />
     );
   });
 
   return (
-    <div className='ViewTierList'>
-      <div>
-        ViewTierList
-      </div>
+    <>
+      {loading
+        ?
+        (<p>loading...</p>)
+        :
+        (<div className='ViewTierList'>
+          {tierList.name ? <div>
+            "{tierList.name}" tier list by {tierList.username}
+          </div> : <div></div>}
 
-      <div className='tier-list-main'>
-        <div className='tier-list-left'>
-          {tierRanks}
-        </div>
-        <div className='tier-list-right'>
-          {/* S rating */}
-          <div>
-            <img src='https://i.imgur.com/nFPH5Pf.png' alt='tier list item' />
-            <img src='https://i.imgur.com/N5ZdQzO.png' alt='tier list item' />
-            <img src='https://i.imgur.com/AnOdNDC.png' alt='tier list item' />
-          </div>
-
-          {/* A rating */}
-          <div>
-            <img src='https://i.imgur.com/sLCkGhk.png' alt='tier list item' />
+          <div className='tier-list-main'>
+            <div className='tier-list-left'>
+              {tierRanks}
+            </div>
+            <div className='tier-list-right'>
+              {itemsByRank}
+            </div>
           </div>
 
-          {/* B rating */}
-          <div>
-            <img src='https://i.imgur.com/nfrl1Rs.png' alt='tier list item' />
-          </div>
+          <AddTierItemForm 
+            sortedTierItems
+            setSortedTierItems
+            tier_list_id={id}
+          />
 
-          {/* C rating */}
-          <div>
-            <img src='https://i.imgur.com/7EpYJJL.png' alt='tier list item' />
-          </div>
-
-          {/* D rating */}
-          <div>
-            <img src='https://i.imgur.com/XVIxZwI.png' alt='tier list item' />
-          </div>
-
-          {/* F rating */}
-          <div>
-            <img src='https://i.imgur.com/cttPzot.png' alt='tier list item' />
-          </div>
-        </div>
-      </div>
-
-      <form className='form'>
-        <h3>Add new item</h3>
-        <div className='inputs'>
-          {/* <div className="form-group col-16">
-            <label for="name">Name</label>
-            <input type="email" className="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. " />
-          </div> */}
-          <div className="col-16">
-            <label for="image">Image</label>
-            <input type="text" className="form-control" id="image" placeholder="e.g. imgur.com/h3rj3.png" />
-          </div>
-          <div>
-            <label for="tier">Tier</label>
-            <select class="form-select">
-              <option selected>Choose tier</option>
-              <option value="S">S</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="F">F</option>
-            </select>
-          </div>
-          <div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </form>
-    </div>
+        </div>)}
+    </>
   );
 }
 

@@ -37,14 +37,10 @@ router.get("/:id/delete", (req, res) => {
     });
 });
 
-router.post("/:id/new", (req, res) => {
-  const id = req.params.id;
-  const tierListInfo = req.body;
-
-  console.log("tierListInfo", tierListInfo)
-
-  const tierLists = createTierList(id, tierListInfo)
+router.post("/new", (req, res) => {
+  const tierLists = createTierList(req.body.id, req.body.name)
     .then((tierLists) => {
+      console.log("tierlists", tierLists)
       res.json(tierLists);
     })
     .catch((err) => {
@@ -58,6 +54,7 @@ router.put("/:id/edit", (req, res) => {
 
   const tierList = updateTierList(id, tierListInfo)
     .then((tierList) => {
+      console.log("tierList:", tierList)
       res.json(tierList);
     })
     .catch((err) => {

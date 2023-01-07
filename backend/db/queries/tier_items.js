@@ -7,12 +7,22 @@ export const getAllTierItems = () => {
     });
 };
 
-export const addTierItem = (tierListId, name, photo) => {
+export const getTierItemsByTierListId = (id) => {
+  return db.query("SELECT * FROM tier_items where tier_list_id = $1;", [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+export const addTierItem = (tierListId, item) => {
+  const setColumns = [...Object.values(item)];
+
   return db.query(`
 	INSERT INTO tier_items
-	(tier_list_id, name, photo)
-	VALUES ($1, $2)
-`, [tierListId, name, photo])
+	(tier_list_id, ranking, photo)
+	VALUES ($1, $2, $3)
+  RETURNING *;
+`, [tierListId, ...setColumns])
     .then(data => {
       return data.rows;
     });

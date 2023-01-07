@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllTierItems, deleteTierItem, updateTierItem, addTierItem } from "../db/queries/tier_items.js";
+import { getAllTierItems, getTierItemsByTierListId, deleteTierItem, updateTierItem, addTierItem } from "../db/queries/tier_items.js";
 
 const router = express.Router();
 
@@ -15,11 +15,22 @@ router.get("/", (req, res) => {
 
 router.post("/:id/new", (req, res) => {
   const id = req.params.id;
-
-  console.log("req.body", req.body);
+  
   const tierItem = addTierItem(id, req.body)
     .then((tierItem) => {
       res.json(tierItem);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+
+  const tierItems = getTierItemsByTierListId(id)
+    .then((tierItems) => {
+      res.json(tierItems);
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });

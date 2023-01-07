@@ -2,7 +2,9 @@ import React from 'react'
 
 function NewTierList() {
   return (
-    <div>NewTierList</div>
+    <div>
+      NewTierList page
+    </div>
   )
 }
 
