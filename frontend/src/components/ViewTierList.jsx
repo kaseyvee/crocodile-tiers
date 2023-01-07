@@ -24,12 +24,15 @@ function ViewTierList(props) {
   useEffect(() => {
     setLoading(true);
 
-    axios.get(`/api/tier_items/${id}`)
+    Promise.all([
+      axios.get(`/api/tier_items/${id}`),
+      axios.get(`/api/tier_lists/${id}`)
+    ])
       .then((res) => {
-        if (res.data.length === 0) return;
+        if (res[0].data.length === 0) return;
         let output = {};
 
-        for (let item of res.data) {
+        for (let item of res[0].data) {
           let rank = item.ranking;
 
           if (!output[rank] && rank !== null) {
@@ -40,14 +43,9 @@ function ViewTierList(props) {
           }
         }
         setSortedTierItems(prev => ({ ...prev, ...output }));
+        setTierList(res[1].data[0]);
       })
       .then(() => setLoading(false))
-      .catch(err => { console.log("err:", err); });
-
-    axios.get(`/api/tier_lists/${id}`)
-      .then((res) => {
-        setTierList(res.data[0]);
-      })
       .catch(err => { console.log("err:", err); });
 
   }, []);
