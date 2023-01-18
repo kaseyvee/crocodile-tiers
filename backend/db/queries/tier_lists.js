@@ -5,7 +5,7 @@ export const getAllTierLists = () => {
     SELECT tier_lists.*, users.name AS username
     FROM tier_lists
     JOIN users ON tier_lists.user_id = users.id
-    ORDER BY tier_lists.created_at ASC;
+    ORDER BY tier_lists.created_at DESC;
     `).then(data => {
     return data.rows;
   });
