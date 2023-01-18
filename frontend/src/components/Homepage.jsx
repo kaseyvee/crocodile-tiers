@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Homepage.scss';
+import TierCard from './TierCard';
 
 function Homepage() {
   const navigate = useNavigate();
@@ -26,26 +27,20 @@ function Homepage() {
         axios.post(`/api/tier_lists/new`, {
           id: 1,
           name: "new list"
-        })
+        });
         return length;
       })
       .then((length) => {
-        navigate(`/${length + 1}`)
-      })
+        navigate(`/${length + 1}`);
+      });
   }
 
-  const tierList = tierLists.map((tierList) => {
+  const allTierLists = tierLists.map((tierList) => {
     return (
-      <div
+      <TierCard
         key={tierList.id}
-      >
-        <Link to={`/${tierList.id}`}>{tierList.name}</Link>
-        <p>id: {tierList.id}</p>
-        <p>user_id: {tierList.user_id}</p>
-        <p>Upvotes: {tierList.upvote}</p>
-        <p>Downvotes: {tierList.downvote}</p>
-        <p>Created At: {tierList.created_at}</p>
-      </div>
+        tierList={tierList}
+      />
     );
   });
 
@@ -53,7 +48,7 @@ function Homepage() {
     <div className='Homepage'>
       <div>
         Home Page <br />
-        {tierList}
+        {allTierLists}
       </div>
       <button onClick={handleAddNewTierList}>Add new tier list</button>
     </div>
