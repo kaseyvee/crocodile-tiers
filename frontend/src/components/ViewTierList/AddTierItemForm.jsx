@@ -59,7 +59,7 @@ function AddTierItemForm(props) {
         <div>
           <label htmlFor="tier">Tier</label>
           <select className="form-select" onChange={handleChooseRanking}>
-            <option selected>Choose tier</option>
+            <option>Choose tier</option>
             <option value="S">S</option>
             <option value="A">A</option>
             <option value="B">B</option>

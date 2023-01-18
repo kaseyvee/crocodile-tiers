@@ -8,7 +8,6 @@ import AddTierItemForm from './AddTierItemForm';
 import TierRow from './TierRow';
 
 function ViewTierList(props) {
-  const [loading, setLoading] = useState(false);
   const [tierList, setTierList] = useState({});
   const [sortedTierItems, setSortedTierItems] = useState({
     "S": [],
@@ -29,33 +28,44 @@ function ViewTierList(props) {
     ])
       .then((res) => {
         if (res[0].data.length === 0) return;
-        let output = {};
+        let output = {
+          "S": [],
+          "A": [],
+          "B": [],
+          "C": [],
+          "D": [],
+          "F": []
+        };
 
         for (let item of res[0].data) {
           let rank = item.ranking;
 
           if (!output[rank] && rank !== null) {
-            output[rank] = [];
             output[rank].push(item);
           } else if (rank !== null) {
             output[rank].push(item);
           }
         }
-        setSortedTierItems(prev => ({ ...prev, ...output }));
+        setSortedTierItems({ ...output });
         setTierList(res[1].data[0]);
       })
-      .then(() => setLoading(false))
       .catch(err => { console.log("err:", err); });
   }
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
+    // setDeleteItem(false);
     fetchData();
-  }, []);
+  }, [deleteItem]);
 
   function handleDeleteItem(id) {
     return axios
       .delete(`/api/tier_items/${id}`)
+      // .then(() => setDeleteItem(true));
+      .then(() => {
+        deleteItem === false ? setDeleteItem(true) : setDeleteItem(false);
+      });
+    // .then(() => window.location.reload());
   };
 
   function getTierItemsByRank(rank) {
@@ -64,6 +74,7 @@ function ViewTierList(props) {
         <Thumbnail
           key={tierItem.id}
           id={tierItem.id}
+          tierId={id}
           photo={tierItem.photo}
           handleDeleteItem={handleDeleteItem}
         />
@@ -101,35 +112,28 @@ function ViewTierList(props) {
   });
 
   return (
-    <>
-      {loading
-        ?
-        (<p>loading...</p>)
+    <div className='ViewTierList'>
+      {tierList.name ?
+        <h1>"{tierList.name}" by {tierList.username}</h1>
         :
-        (<div className='ViewTierList'>
-          {tierList.name ?
-            <h1>"{tierList.name}" by {tierList.username}</h1>
-            :
-            <div></div>}
+        <div></div>}
 
-          <div className='tier-list-main'>
-            <div className='tier-list-left'>
-              {tierRanks}
-            </div>
-            <div className='tier-list-right'>
-              {itemsByRank}
-            </div>
-          </div>
+      <div className='tier-list-main'>
+        <div className='tier-list-left'>
+          {tierRanks}
+        </div>
+        <div className='tier-list-right'>
+          {itemsByRank}
+        </div>
+      </div>
 
-          <AddTierItemForm
-            sortedTierItems
-            setSortedTierItems
-            tier_list_id={id}
-            tierListName={tierList.name}
-          />
-
-        </div>)}
-    </>
+      <AddTierItemForm
+        sortedTierItems
+        setSortedTierItems
+        tier_list_id={id}
+        tierListName={tierList.name}
+      />
+    </div>
   );
 }
 
