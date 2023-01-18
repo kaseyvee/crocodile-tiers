@@ -46,7 +46,7 @@ export const updateTierItem = (id, tierItemInfo) => {
 };
 
 export const deleteTierItem = (id) => {
-  return db.query("DELETE * FROM tier_items; WHERE id = $1", [id])
+  return db.query("DELETE FROM tier_items WHERE id = $1 RETURNING *;", [id])
     .then(data => {
       return data.rows;
     });

@@ -18,12 +18,11 @@ function ViewTierList(props) {
     "D": [],
     "F": []
   });
+  const [deleteItem, setDeleteItem] = useState(false);
 
   const { id } = useParams();
 
-  useEffect(() => {
-    setLoading(true);
-
+  function fetchData() {
     Promise.all([
       axios.get(`/api/tier_items/${id}`),
       axios.get(`/api/tier_lists/${id}`)
@@ -47,15 +46,26 @@ function ViewTierList(props) {
       })
       .then(() => setLoading(false))
       .catch(err => { console.log("err:", err); });
+  }
 
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
   }, []);
+
+  function handleDeleteItem(id) {
+    return axios
+      .delete(`/api/tier_items/${id}`)
+  };
 
   function getTierItemsByRank(rank) {
     return sortedTierItems[rank].map((tierItem) => {
       return (
         <Thumbnail
           key={tierItem.id}
+          id={tierItem.id}
           photo={tierItem.photo}
+          handleDeleteItem={handleDeleteItem}
         />
       );
     });

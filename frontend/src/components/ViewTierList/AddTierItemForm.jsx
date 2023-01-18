@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AddTierItemForm.scss';
+import './ViewTierList.scss';
 
 function AddTierItemForm(props) {
   const [ranking, setRanking] = useState("");
@@ -22,7 +22,7 @@ function AddTierItemForm(props) {
     console.log("handlechooseranking: ", e.target.value);
   }
 
-  function handleClick(e) {
+  function handleAddNewItem(e) {
     // e.preventDefault();
     // console.log("handleClick");
 
@@ -69,7 +69,7 @@ function AddTierItemForm(props) {
           </select>
         </div>
         <div>
-          <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+          <button type="submit" className="btn btn-primary" onClick={handleAddNewItem}>Submit</button>
         </div>
       </div>
       <br />
