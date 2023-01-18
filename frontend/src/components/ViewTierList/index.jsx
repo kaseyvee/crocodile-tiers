@@ -53,19 +53,15 @@ function ViewTierList(props) {
   }
 
   useEffect(() => {
-    // setLoading(true);
-    // setDeleteItem(false);
     fetchData();
   }, [deleteItem]);
 
   function handleDeleteItem(id) {
     return axios
       .delete(`/api/tier_items/${id}`)
-      // .then(() => setDeleteItem(true));
       .then(() => {
         deleteItem === false ? setDeleteItem(true) : setDeleteItem(false);
       });
-    // .then(() => window.location.reload());
   };
 
   function getTierItemsByRank(rank) {

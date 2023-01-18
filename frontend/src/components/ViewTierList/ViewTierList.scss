@@ -91,23 +91,17 @@ h3 {
 }
 
 .thumbnail {
-  :hover {
-    cursor: pointer;
-  }
-
-  // border: 2px solid pink;
-
-  // :hover+.delete-button-img {
-  //   display: block;
-  // }
-
-  // .delete-button-img {
-  //   display: none;
-  //   width: 1rem;
-  //   height: 1rem;
-  //   cursor: pointer;
-  //   position: absolute;
-  //   transform: translate(3rem, 0rem);
-  // }
-
+    .delete-button-img {
+      opacity: 0;
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
+      position: absolute;
+      transform: translate(2.75rem, -1.35rem);
+    }
+    
+    &:hover .delete-button-img {
+      opacity: 1;
+      cursor: pointer;
+    }
 }
