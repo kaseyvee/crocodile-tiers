@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .tier-card {
   border: 1px solid#89c5fe;
   padding: 2rem;
@@ -37,7 +39,7 @@
     
     .fa-thumbs-down{
       margin-right: 0.5rem;
-      color: red;
+      color: $red;
     }
   }
 

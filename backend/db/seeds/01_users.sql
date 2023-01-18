@@ -1,3 +1,5 @@
 INSERT INTO users (name) 
 VALUES 
-('Aldwin Bautista');
+('Aldwin Bautista'),
+('mr cool beans'),
+('breadm@zterrrr');

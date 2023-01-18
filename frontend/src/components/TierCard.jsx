@@ -16,7 +16,7 @@ function TierCard(props) {
         <div className='tier-list-author'>
           <p>by {tierList.username}</p>
         </div>
-        <p>last edited at <Moment fromNow>{tierList.created_at}</Moment></p>
+        <p>created <Moment fromNow>{tierList.created_at}</Moment></p>
       </div>
       <div className='right-half'>
         <div><i class="fa-regular fa-thumbs-up"></i> {tierList.upvote}</div>
