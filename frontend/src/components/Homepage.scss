@@ -1,9 +1,33 @@
 .Homepage {
-  border: 3px dashed blue;
+  // border: 3px dashed blue;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  // background-color: rgb(10, 196, 134);
-  // height: 100vh;
+  flex-direction: column;
+
+  .tier-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  h1 {
+    font-weight: bold;
+    margin: 1rem 0;
+    text-align: center;
+  }
+  
+  .add-new-button {
+    background-color: #0D6EFD;
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.3rem;
+    font-weight: 500;
+    width: fit-content;
+  }
 }

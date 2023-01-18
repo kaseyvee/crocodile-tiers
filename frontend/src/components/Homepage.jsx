@@ -46,11 +46,12 @@ function Homepage() {
 
   return (
     <div className='Homepage'>
-      <div>
-        Home Page <br />
+      <h1>Newest Tiers</h1>
+      <button onClick={handleAddNewTierList}
+        className='add-new-button'>Add new tier list</button>
+      <div className='tier-list-container'>
         {allTierLists}
       </div>
-      <button onClick={handleAddNewTierList}>Add new tier list</button>
     </div>
   );
 }

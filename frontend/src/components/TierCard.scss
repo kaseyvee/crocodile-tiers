@@ -1,0 +1,44 @@
+.tier-card {
+  border: 1px solid#89c5fe;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+
+  min-width: 25rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  .tier-list-name {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .tier-list-author {
+    font-weight: bold;
+  }
+
+  .right-half {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fa-thumbs-up{
+      margin-right: 0.5rem;
+      color: green;
+    }
+    
+    .fa-thumbs-down{
+      margin-right: 0.5rem;
+      color: red;
+    }
+  }
+
+}

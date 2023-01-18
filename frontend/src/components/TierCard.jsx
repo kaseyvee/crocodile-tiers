@@ -1,19 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Moment from "react-moment";
+import './TierCard.scss';
 
 function TierCard(props) {
   const tierList = props.tierList;
+  console.log("tierList: ", tierList);
 
   return (
-    <div
-      key={tierList.id}
-    >
-      <Link to={`/${tierList.id}`}>{tierList.name}</Link>
-      <p>id: {tierList.id}</p>
-      <p>user_id: {tierList.user_id}</p>
-      <p>Upvotes: {tierList.upvote}</p>
-      <p>Downvotes: {tierList.downvote}</p>
-      <p>Created At: {tierList.created_at}</p>
+    <div className='tier-card'>
+      <div className='left-half'>
+        <div className='tier-list-name'>
+          <Link to={`/${tierList.id}`}>{tierList.name}</Link>
+        </div>
+        <div className='tier-list-author'>
+          <p>by {tierList.username}</p>
+        </div>
+        <p>created {tierList.created_at}</p>
+      </div>
+      <div className='right-half'>
+        <div><i class="fa-regular fa-thumbs-up"></i> {tierList.upvote}</div>
+        <div><i class="fa-regular fa-thumbs-down"></i> {tierList.downvote}</div>
+      </div>
     </div>
   );
 }
