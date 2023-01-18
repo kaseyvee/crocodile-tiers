@@ -1,7 +1,7 @@
 import React from 'react';
 import './ViewTierList.scss';
 
-function TierRankItem(props) {
+function Tier(props) {
   return (
     <div className='tier-rank-item'>
       <div style={{ backgroundColor: `${props.colour}`, width: '100%' }}>
@@ -11,4 +11,4 @@ function TierRankItem(props) {
   );
 }
 
-export default TierRankItem;
+export default Tier;

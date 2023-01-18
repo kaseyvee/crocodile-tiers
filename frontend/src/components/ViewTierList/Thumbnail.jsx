@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TierPhotoItem(props) {
+export default function Thumbnail(props) {
   return (
     <img
       src={props.photo}

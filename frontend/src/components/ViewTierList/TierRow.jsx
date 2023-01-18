@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ItemsByRank(props) {
+function TierRow(props) {
   return (
     <div>
       {props.getTierItemsByRank(props.ranking)}
@@ -8,4 +8,4 @@ function ItemsByRank(props) {
   );
 }
 
-export default ItemsByRank;
+export default TierRow;

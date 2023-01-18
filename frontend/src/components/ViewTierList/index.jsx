@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './ViewTierList.scss';
-import TierRankItem from './TierRankItem';
-import TierPhotoItem from './TierPhotoItem';
+import Tier from './Tier';
+import Thumbnail from './Thumbnail';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AddTierItemForm from './AddTierItemForm';
-import ItemsByRank from './ItemsByRank';
+import TierRow from './TierRow';
 
 function ViewTierList(props) {
   const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ function ViewTierList(props) {
   function getTierItemsByRank(rank) {
     return sortedTierItems[rank].map((tierItem) => {
       return (
-        <TierPhotoItem
+        <Thumbnail
           key={tierItem.id}
           photo={tierItem.photo}
         />
@@ -72,7 +72,7 @@ function ViewTierList(props) {
 
   const tierRanks = tiers.map((tier) => {
     return (
-      <TierRankItem
+      <Tier
         key={tiers.indexOf(tier)}
         ranking={tier.ranking}
         colour={tier.colour}
@@ -82,7 +82,7 @@ function ViewTierList(props) {
 
   const itemsByRank = tiers.map((tier) => {
     return (
-      <ItemsByRank
+      <TierRow
         key={tiers.indexOf(tier)}
         ranking={tier.ranking}
         getTierItemsByRank={getTierItemsByRank}
