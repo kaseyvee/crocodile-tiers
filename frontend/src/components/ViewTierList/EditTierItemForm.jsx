@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ViewTierList.scss';
 
-function AddTierItemForm(props) {
+function EditTierItemForm(props) {
   const [ranking, setRanking] = useState("");
+  // const [updateRanking, setUpdateRanking] = useState("");
   const [photo, setPhoto] = useState("");
+  // const [updatePhoto, setUpdatePhoto] = useState("");
   const [error, setError] = useState("");
   const [name, setName] = useState(props.tierListName);
 
@@ -24,7 +26,6 @@ function AddTierItemForm(props) {
 
   function handleAddNewItem(e) {
     // e.preventDefault();
-    // console.log("handleClick");
 
     axios.post(`/api/tier_items/${tier_list_id}/new`, {
       ranking: ranking,
@@ -43,6 +44,12 @@ function AddTierItemForm(props) {
       name: name
     });
   }
+
+  // function handleChangeTierItemRank() {
+  //   axios.put(`/api/tier_item/${tier_item_id}/edit`, {
+  //     name: name
+  //   });
+  // }
 
   return (
     <form className='form'>
@@ -74,14 +81,33 @@ function AddTierItemForm(props) {
       </div>
       <br />
       <div className='edit-tier-list-name'>
-        <h3>Edit tier list name</h3>
+        <h3>Edit</h3>
         <div>
-          <input type="text" value={name} onChange={handleTierListNameChange} className="form-control" />
+          <div>
+            <label>Tier List Name</label>
+            <input type="text" value={name} onChange={handleTierListNameChange} className="form-control" /> <br />
+          </div>
           <button type="submit" className="btn btn-primary" onClick={handleTierListNameUpdate}>Submit</button>
         </div>
+      </div>
+      <div>
+        <div className="col-16">
+          <label htmlFor="image">Image</label>
+          <input type="text" className="form-control" id="image" placeholder="e.g. imgur.com/h3rj3.png" value={photo} onChange={handleChoosePhoto} />
+        </div> <br />
+        <label htmlFor="tier">Tier</label>
+        <select className="form-select" onChange={handleChooseRanking}>
+          <option>Choose tier</option>
+          <option value="S">S</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="F">F</option>
+        </select>
       </div>
     </form>
   );
 }
 
-export default AddTierItemForm;
+export default EditTierItemForm;

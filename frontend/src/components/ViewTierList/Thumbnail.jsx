@@ -8,6 +8,7 @@ export default function Thumbnail(props) {
       <img
         src={props.photo}
         alt=""
+        onClick={() => props.handleTierItemSelect(props.id)}
       />
       <img
         className='delete-button-img'

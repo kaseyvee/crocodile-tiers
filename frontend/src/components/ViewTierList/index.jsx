@@ -4,7 +4,7 @@ import Tier from './Tier';
 import Thumbnail from './Thumbnail';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import AddTierItemForm from './AddTierItemForm';
+import EditTierItemForm from './EditTierItemForm';
 import TierRow from './TierRow';
 
 function ViewTierList(props) {
@@ -18,6 +18,7 @@ function ViewTierList(props) {
     "F": []
   });
   const [deleteItem, setDeleteItem] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
 
   const { id } = useParams();
 
@@ -64,6 +65,16 @@ function ViewTierList(props) {
       });
   };
 
+  function handleTierItemSelect(itemId) {
+    return axios
+    .get(`/api/tier_items/${id}`)
+    .then((res) => {
+      const items = res.data;
+      const foundItem = items.find(item => item.id ===itemId);
+      setSelectedItem(foundItem);
+    });
+  }
+
   function getTierItemsByRank(rank) {
     return sortedTierItems[rank].map((tierItem) => {
       return (
@@ -73,6 +84,7 @@ function ViewTierList(props) {
           tierId={id}
           photo={tierItem.photo}
           handleDeleteItem={handleDeleteItem}
+          handleTierItemSelect={handleTierItemSelect}
         />
       );
     });
@@ -123,11 +135,12 @@ function ViewTierList(props) {
         </div>
       </div>
 
-      <AddTierItemForm
+      <EditTierItemForm
         sortedTierItems
         setSortedTierItems
         tier_list_id={id}
         tierListName={tierList.name}
+        selectedItem={selectedItem}
       />
     </div>
   );
