@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import '../../variables.scss';
 
 .ViewTierList {
   @include flex-column;
@@ -63,4 +63,12 @@
     align-items: flex-end;
     gap: 2rem;
   }
+}
+
+.tier-rank-item{
+  color: $black;
+}
+
+h1{
+  margin: 1rem 0;
 }

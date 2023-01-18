@@ -66,7 +66,7 @@ function ViewTierList(props) {
     { ranking: "A", colour: "#FFBF7F" },
     { ranking: "B", colour: "#FEFF7F" },
     { ranking: "C", colour: "#7EFE7E" },
-    { ranking: "D", colour: "#7FFFFF" },
+    { ranking: "D", colour: "#0A89FF" },
     { ranking: "F", colour: "#FF7FFE" }
   ];
 
@@ -97,9 +97,10 @@ function ViewTierList(props) {
         (<p>loading...</p>)
         :
         (<div className='ViewTierList'>
-          {tierList.name ? <div>
-            "{tierList.name}" tier list by {tierList.username}
-          </div> : <div></div>}
+          {tierList.name ?
+            <h1>"{tierList.name}" by {tierList.username}</h1>
+            :
+            <div></div>}
 
           <div className='tier-list-main'>
             <div className='tier-list-left'>
@@ -110,7 +111,7 @@ function ViewTierList(props) {
             </div>
           </div>
 
-          <AddTierItemForm 
+          <AddTierItemForm
             sortedTierItems
             setSortedTierItems
             tier_list_id={id}
